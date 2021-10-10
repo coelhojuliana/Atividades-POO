@@ -45,6 +45,7 @@ let img: p5.Image;
 let img_left: p5.Image;
 let food_img: p5.Image;
 let board_img: p5.Image;
+
 let gatito: Entidade;
 let food: Entidade;
 let board: Board;
