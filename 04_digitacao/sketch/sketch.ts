@@ -123,10 +123,10 @@ class Game{
     this.board.update();
     background(50, 50, 50);
     this.board.draw();
-    if(this.board.mistakes > 5){
+    if(this.board.mistakes > 10){
       this.activeState = this.gameOver;
     }
-    if(this.board.hits > 5){
+    if(this.board.hits > 10){
       this.activeState = this.gameWin;
     }
   }
