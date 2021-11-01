@@ -87,7 +87,7 @@ class Pessoa{
     }
   }
   
-  //RODANDO OS TESTES ---------------------------------------------------------------------
+  //RODANDO OS TESTES --------------------------------------------------------------------
   console.log("1# Subindo e Buzinando --------------");
   let pessoa = new Pessoa("marcos", 4);
   let moto = new Motinha(null, 1, 0);
