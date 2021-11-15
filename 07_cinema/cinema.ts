@@ -110,9 +110,7 @@ class Sala{
 }
 
 let sala = new Sala(5);
-//sala.mostrarCadeiras();
 sala = new Sala(4);
-//sala.mostrarCadeiras();
 sala.reservar(new Cliente("davi", "3232", 0));
 sala.reservar(new Cliente("joao", "3131", 3));
 sala.mostrarCadeiras();
