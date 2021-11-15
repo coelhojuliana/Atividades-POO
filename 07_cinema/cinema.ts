@@ -40,45 +40,68 @@ class Cliente{
 }
 
 class Sala{
-    cadeiras: Array<Cliente>;
+    cadeiras: Array<Cliente | null>;
 
     constructor(capacidade: number){
         this.cadeiras = [];
         for(let i = 0; i < capacidade; i++){
-            this.cadeiras.push();
-        }  
+            this.cadeiras.push(null);
+        }
     }
     cancelar(id: string){
         for(let i = 0; i < this.cadeiras.length; i++){
-            if(this.cadeiras[i].id == id){
-                this.cadeiras.splice(i, 1);
+           let cliente = this.cadeiras[i];
+           if(cliente == null){
+                console.log("ERRO: Não há nenhuma reserva para ser cancelada");
+                return
+            }
+           if(cliente != null && cliente.id == id){
+               this.cadeiras[i] = null;
+               console.log("Cancelamento para: " + cliente.nome + " concluído.");
+               return
+           }
+        }
+    }
+
+    reservar(cliente: Cliente){
+        for(let j = 0; j < this.cadeiras.length; j++){
+            let cli = this.cadeiras[j];
+            if(cli != null && cli.id == cliente.id){
+                console.log("ERRO: Já há alguém com este ID na sala.");
+                return
+            }
+        }
+        for(let i = 0; i < this.cadeiras.length; i++){
+            let cli = this.cadeiras[i];
+            if(cli != null && cli.lugar == cliente.lugar){
+                console.log("ERRO: O assento já está ocupado")
+                return
+            }
+
+            if(cliente.lugar == i && this.cadeiras[i] == null){
+                this.cadeiras[i] = cliente;
+                console.log("Reserva concluída para: " + cliente.nome);
                 return
             }
         }
     }
 
-    reservar(cliente: Cliente){
-        let p = cliente.lugar;
+    mostrarCadeiras(){
+        let assentos = [];
         for(let i = 0; i < this.cadeiras.length; i++){
-            if(cliente.lugar == this.cadeiras[i].lugar){
-                console.log("Erro: O lugar já está ocupado");
-                return
+            if(this.cadeiras[i] == null){
+                assentos[i] = "-";
             }
-            if(cliente.id == this.cadeiras[i].id){
-                console.log("Erro: Já há uma pessoa com a mesma ID na sala");
-                return
+            else{
+                assentos[i] = this.cadeiras[i];
             }
         }
-        this.cadeiras[p] = cliente;
-        return
-        
+        console.log(assentos);
     }
 
     getCadeiras(){
         return this.cadeiras;
     }
-
-   
 
     toString(): string {
         return `Sala ${this.cadeiras}`;
@@ -87,16 +110,13 @@ class Sala{
 }
 
 let sala = new Sala(5);
-console.log(sala);
+//sala.mostrarCadeiras();
+sala = new Sala(4);
+//sala.mostrarCadeiras();
 sala.reservar(new Cliente("davi", "3232", 0));
-console.log(sala);
 sala.reservar(new Cliente("joao", "3131", 3));
-console.log(sala);
-sala.reservar(new Cliente("rute", "3030", 0));
-console.log(sala);
-sala.reservar(new Cliente("davi", "3232", 2));
-console.log(sala);
+sala.mostrarCadeiras();
+sala.reservar(new Cliente("rute", "3231", 0));
+sala.mostrarCadeiras();
 sala.cancelar("3232");
-console.log(sala);
-
-// Não consigo acessar os dados do cliente que está na cadeira quando o vetor da cadeira aceita null ou string.
+sala.mostrarCadeiras();
