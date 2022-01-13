@@ -180,7 +180,7 @@ class Hospital{
 }
 
 let hosp = new Hospital();
-hosp.addPaciente(new Paciente("Ellie", "tdah"));
+hosp.addPaciente(new Paciente("Ellie", "ansiedade"));
 hosp.addPaciente(new Paciente("Mila", "pé quebrado"));
 
 hosp.addMedico(new Medico("Vini", "Ortopedista"));
