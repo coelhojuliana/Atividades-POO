@@ -31,6 +31,7 @@ class User{
         }
         this.following.set(chave, other);
         other.followers.set(this.username, this);
+        console.log(this.username + " agora segue " + chave);
     }
     public getInbox(): Inbox{
         return this.inbox;
@@ -41,6 +42,7 @@ class User{
         for(let user of this.followers.values()){
             user.inbox.timeline.set(tw.id, tw);
         }
+        console.log("O tweet foi criado.");
     }
     public unfollow(other: User){
         if(this.following.has(other.username) !== true){
@@ -52,6 +54,7 @@ class User{
             this.following.delete(user.username);
             this.inbox.rmMsgsFrom(user.username);
             user.followers.delete(this.username);
+            console.log(this.username + " parou de seguir " + other.username);
         }
     }
     public like(id: number){
@@ -84,10 +87,10 @@ class Controller{
         if(this.users.has(username)){
             console.log("ERRO: O usuário já está cadastrado.");
             return;
-            //throw new Error("ERRO: O usuário já está cadastrado.");
         }
         let user = new User(username);
         this.users.set(username, user);
+        console.log(username + " foi adicionado.");
     }
     public toString(): string{
         let user: Array<User> = [];
@@ -119,15 +122,11 @@ class Controller{
             user.sendTweet(tweet);
         } 
         console.log("ERRO: Usuário não encontrado.");
-        // let user = this.getUser(username);
-        // let tweet = this.createTweet(username, msg);
-        // user.sendTweet(tweet);
     }
     public sendRt(username: string, twId: number, rtMsg: string){
         if(this.users.has(username) === false){
             console.log("ERRO: Usuário não encontrado.");
             return
-            //throw new Error("Usuário não encontrado.");
         }
         let user = this.getUser(username);
         let inbox = user.getInbox();
@@ -136,20 +135,16 @@ class Controller{
         if(tw_ori === undefined){
             console.log("ERRO: Tweet original não definido");
             return
-            //throw new Error("Tweet original não definido.");
         }
         newtw.setRt(tw_ori);
         this.tweets.set(newtw.id, newtw);
         user.sendTweet(newtw); 
-        
-        
     }
     public rmUser(username: string){
         let user = this.users.get(username);
         if(user === undefined){
             console.log("Usuário não definido.");
             return
-            //throw new Error("Usuário indefinido."); 
         }
         let inbox = user.getInbox();
         user.unfollowAll();
@@ -158,6 +153,7 @@ class Controller{
             tw.setDeleted();
         }
         this.users.delete(username);
+        console.log(username + " foi removido.");
     }
 }
 
@@ -199,7 +195,6 @@ class Inbox{
     }
     public rmMsgsFrom(username: string){
         for(let tweets of this.timeline.values()){
-            //fazer lista com ids pra deletar se não der certo
             if(tweets.username == username){
                 this.timeline.delete(tweets.id);
             }
