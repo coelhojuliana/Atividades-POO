@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="my.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    
+        <title>Tela do usuário - Prova prática</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var user_pontos = 2000;
+            var gasto = 0;
+            var viagens = 0;
+        </script>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-6">
+                    <div class="m-2 card bg-meu-roxo-dark">
+                        <div class="card-header">
+                            <div class="d-flex p-2">
+                                <div class=" d-flex p-2 flex-grow-1 bd-highlight">
+                                    <img src="img/mini.png" class="me-3">
+                                    <h4 class="text-light mt-2">Marquinhos</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2">
+                        <div class="d-flex flex-row">
+                            <select class="form-select" id="viagem-forma" aria-label="Default select example" onchange="setForma(this)">
+                                <option>Escolha uma forma de viagem</option>
+                                <option value="Ônibus">Ônibus</option>
+                                <option value="Avião">Avião</option>
+                            </select>
+                            <select class="form-select" id="viagem-tipo-1" aria-label="Default select example" onchange="setTipo1(this)">
+                                <option >Escolha o tipo de viagem</option>
+                                <option value="Internacional">Internacional</option>
+                                <option value="Nacional">Nacional</option>
+                            </select>
+                            <select class="form-select" id="viagem-tipo-0" aria-label="Default select example" onchange="setTipo0(this)">
+                                <option >Escolha o tipo de viagem</option>
+                                <option value="Interestadual">Interestadual</option>
+                                <option value="Intermunicipal">Intermunicipal</option>
+                                <option value="Municipal">Municipal</option>
+                            </select>
+                        </div>
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" value="" id="viagem-idavolta">
+                            <label class="form-check-label" for="flexCheckDefault">Ida e volta</label>
+                        </div>
+                        <div class="mt-3 d-flex justify-content-end">
+                            <button class="btn bg-meu-verde-dark text-light fw-bold" id="enviar">Fazer viagem</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-8">
+                    <div class="card mt-3">
+                        <div class="card-header bg-meu-roxo-dark">
+                            <h5 class="text-light">Histórico</h5>
+                        </div>
+
+                        <div class="card-body">
+                            <table class="table" id="table">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Meio de transporte</th>
+                                      <th scope="col">Tipo</th>
+                                      <th scope="col">Ida-e-volta</th>
+                                      <th scope="col">Custo em pontos</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    
+                                  </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-8 ">
+                    <div class=" bd-highlight mt-3"><p class="meu-roxo-dark">Saldo atual: <span class="fw-bold" id="user_pontos">2000
+                    </span></p></div>
+                    <div class="bd-highlight "><p class="meu-roxo-dark">Numero de viagens: <span class="fw-bold" id="n_viagens">0
+                    </span></p></div>
+                    <div class="bd-highlight "><p class="meu-roxo-dark">Total gasto: <span class="fw-bold" id="n_gasto">0
+                    </span></p></div>
+                </div>
+                <div class="col-md-2">
+                    
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+
+            document.getElementById('viagem-tipo-0').hidden = true;
+            document.getElementById('viagem-tipo-1').hidden = true;
+
+            var tipo = "";
+            var custo = 0;
+            function setForma(select){
+                if(select.value == "Ônibus"){
+                    document.getElementById('viagem-tipo-0').hidden = false;
+                    document.getElementById('viagem-tipo-1').hidden = true;
+                }
+                else if(select.value == "Avião"){
+                    document.getElementById('viagem-tipo-0').hidden = true;
+                    document.getElementById('viagem-tipo-1').hidden = false;
+                }else{
+                    document.getElementById('viagem-tipo-0').hidden = true;
+                    document.getElementById('viagem-tipo-1').hidden = true;
+                }
+            }
+
+            function setTipo1(select){
+                tipo = select.value;
+            }
+            function setTipo0(select){
+                tipo = select.value;
+            }   
+
+
+            document.getElementById('enviar').addEventListener('click', () =>{
+                var saldo = document.getElementById('user_pontos').select;
+                var meio = document.getElementById('viagem-forma').value;
+                var idavolta = "";
+                var custo = document.getElementById('user_pontos');
+
+                if(document.querySelector('#viagem-idavolta').checked == true){
+                    idavolta = "Sim";
+                }else{
+                    idavolta = "Não";
+                }
+
+                if(meio == "Avião" & tipo == "Internacional"){
+                    custo = 5000;
+                    console.log(custo)
+                } else if(meio == "Avião" & tipo == "Nacional"){
+                    custo = 500;
+                    console.log(custo)
+                } else if(meio == "Ônibus" & tipo == "Interestadual"){
+                    custo = 150;
+                    console.log(custo)
+                } else if(meio == "Ônibus" & tipo == "Intermunicipal"){
+                    custo = 50;
+                    console.log(custo)
+                } else if(meio == "Ônibus" & tipo == "Municipal"){
+                    custo = 25;
+                    console.log(custo)
+                }
+
+                if(document.getElementById('user_pontos').innerHTML < 25){
+                    document.getElementById('enviar').style.opacity = "0.5";
+                    document.getElementById('enviar').setAttribute('class', disabled);
+                }
+
+                if(custo <= document.getElementById('user_pontos').innerHTML){
+                    var template = "<tr class=''><th scope='row'>"+meio+"</th><td>"+tipo+"</td><td>"+idavolta+"</td><td>"+custo+"</td></tr>";
+                    document.getElementById('table').innerHTML += template;
+                    document.getElementById('user_pontos').innerHTML = (user_pontos -= custo).toString();
+                    document.getElementById('n_gasto').innerHTML = (gasto += custo);
+                    document.getElementById('n_viagens').innerHTML = (viagens += 1);
+                    
+                } else{
+                    alert('Não é possível realizar a viagem');
+                }
+                
+
+            });
+
+        </script>
+        
+    </body>
+</html>
